@@ -6,11 +6,11 @@ import { fileURLToPath, URL } from 'node:url'
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   const isProd = mode === 'production';
-  // 在 Capacitor (原生打包) 或 Tauri 环境下，使用根路径，避免离线包找不到 /iplaycheck/ 前缀的静态资源
+  // 站点通过自定义域名 https://iplaystudio.dpdns.org 访问。GitHub Pages 项目站点绑定自定义域名后，
+  // 内容直接挂在域名根目录（不再有 /iplaycheck/ 前缀）；Capacitor / Tauri 离线包同样使用根路径。
   const isCapacitor = !!process.env.CAPACITOR_PLATFORM;
-  const isTauri = !!process.env.TAURI_PLATFORM;
-  const baseUrl = isProd ? ((isCapacitor || isTauri) ? '/' : '/iplaycheck/') : '/';
-  const productionOrigin = 'https://iplaystudio.github.io';
+  const baseUrl = '/';
+  const productionOrigin = 'https://iplaystudio.dpdns.org';
   const absoluteBaseUrl = isProd && !isCapacitor
     ? new URL(baseUrl, productionOrigin).toString()
     : baseUrl;
